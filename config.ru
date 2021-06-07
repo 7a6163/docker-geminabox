@@ -1,7 +1,7 @@
-require "rubygems"
-require "geminabox"
+require 'rubygems'
+require 'geminabox'
 
-Geminabox.data = "/var/geminabox-data" # ... or wherever
+Geminabox.data = '/var/geminabox-data' # ... or wherever
 
 # Use Rack::Protection to prevent XSS and CSRF vulnerability if your geminabox server is open public.
 # # Rack::Protection requires a session middleware, choose your favorite one such as Rack::Session::Memcache.
@@ -12,20 +12,20 @@ use Rack::Session::Pool, expire_after: 1000 # sec
 use Rack::Protection
 
 # Basic Authentication
-@@username = ENV["BASIC_USER"]
-@@password = ENV["BASIC_PASS"]
+@@username = ENV['BASIC_USER']
+@@password = ENV['BASIC_PASS']
 
 unless @@username.empty? && @@password.empty?
   Geminabox::Server.helpers do
     def protected!
-      unless authorized?
-        response['WWW-Authenticate'] = %(Basic realm="Geminabox")
-        halt 401, "No pushing or deleting without auth.\n"
-      end
+      return if authorized?
+
+      response['WWW-Authenticate'] = %(Basic realm="Geminabox")
+      halt 401, "No pushing or deleting without auth.\n"
     end
 
     def authorized?
-      @auth ||=  Rack::Auth::Basic::Request.new(request.env)
+      @auth ||= Rack::Auth::Basic::Request.new(request.env)
       @auth.provided? && @auth.basic? && @auth.credentials && @auth.credentials == [@@username, @@password]
     end
   end
@@ -39,9 +39,7 @@ unless @@username.empty? && @@password.empty?
   end
 
   Geminabox::Server.before '/api/v1/gems' do
-    unless env['HTTP_AUTHORIZATION'] == 'API_KEY'
-      halt 401, "Access Denied. Api_key invalid or missing.\n"
-    end
+    halt 401, "Access Denied. Api_key invalid or missing.\n" unless env['HTTP_AUTHORIZATION'] == 'API_KEY'
   end
 end
 

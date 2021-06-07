@@ -1,4 +1,4 @@
-FROM ruby:3.0-alpine AS Builder
+FROM ruby:2.7-alpine AS Builder
 
 RUN apk add --no-cache build-base=0.5-r2
 RUN gem install bundler:2.2.17
@@ -8,7 +8,7 @@ COPY Gemfile* ./
 RUN gem install bundler:2.2.17
 RUN bundle install
 
-FROM ruby:3.0-alpine
+FROM ruby:2.7-alpine
 LABEL maintainer="Zac"
 
 RUN apk add --no-cache tini=0.19.0-r0
