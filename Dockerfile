@@ -5,7 +5,7 @@ RUN gem install bundler:2.2.17
 
 WORKDIR /app
 COPY Gemfile* ./
-RUN gem install bundler:2.2.17
+RUN gem install bundler:2.2.28
 RUN bundle install
 
 FROM ruby:2.7-alpine
