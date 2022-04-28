@@ -1,11 +1,8 @@
-GEM
-  remote: https://rubygems.org/
+GIT
+  remote: https://github.com/ahorek/geminabox.git
+  revision: a15ce35332add76aead7ec11220114c30d46f477
+  branch: bundler_versions
   specs:
-    builder (3.2.4)
-    faraday (2.2.0)
-      faraday-net_http (~> 2.0)
-      ruby2_keywords (>= 0.0.4)
-    faraday-net_http (2.0.2)
     geminabox (1.4.1)
       builder
       faraday
@@ -14,6 +11,15 @@ GEM
       reentrant_flock
       rss
       sinatra (>= 1.2.7)
+
+GEM
+  remote: https://rubygems.org/
+  specs:
+    builder (3.2.4)
+    faraday (2.2.0)
+      faraday-net_http (~> 2.0)
+      ruby2_keywords (>= 0.0.4)
+    faraday-net_http (2.0.2)
     httpclient (2.8.3)
     mustermann (1.1.1)
       ruby2_keywords (~> 0.0.1)
@@ -41,7 +47,7 @@ PLATFORMS
   x86_64-linux-musl
 
 DEPENDENCIES
-  geminabox (~> 1.4.0)
+  geminabox!
   puma (~> 5.0)
 
 BUNDLED WITH
