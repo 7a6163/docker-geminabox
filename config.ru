@@ -18,7 +18,7 @@ use Rack::Protection
 @username = ENV['BASIC_USER']
 @password = ENV['BASIC_PASS']
 
-unless @username.empty? && @@password.empty?
+unless @username.empty? && @password.empty?
   Geminabox::Server.helpers do
     def protected!
       return if authorized?
