@@ -29,7 +29,7 @@ unless @username.empty? && @@password.empty?
 
     def authorized?
       @auth ||= Rack::Auth::Basic::Request.new(request.env)
-      auth.provided? && @auth.basic? && @auth.credentials && @auth.credentials == [@username, @@password]
+      @auth.provided? && @auth.basic? && @auth.credentials && @auth.credentials == [@username, @@password]
     end
   end
 
