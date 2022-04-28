@@ -4,7 +4,7 @@ require 'geminabox'
 Geminabox.data = '/var/geminabox-data' # ... or wherever
 Geminabox.rubygems_proxy = ENV['RUBYGEMS_PROXY'] || true
 Geminabox.allow_remote_failure = ENV['ALLOW_REMOTE_FAILURE'] || true
-Geminabox.rubygems_proxy_merge_strategy = ENV['RUBYGEMS_PROXY_MERGE_STRATEGY']&.to_sym || :remote_gems_take_precedence_over_local_gems
+Geminabox.rubygems_proxy_merge_strategy = ENV['RUBYGEMS_PROXY_MERGE_STRATEGY']&.to_sym || :combine_local_and_remote_gem_versions
 
 # Use Rack::Protection to prevent XSS and CSRF vulnerability if your geminabox server is open public.
 # # Rack::Protection requires a session middleware, choose your favorite one such as Rack::Session::Memcache.

@@ -1,4 +1,4 @@
 source 'https://rubygems.org'
 
-gem 'geminabox', github: 'ahorek/geminabox', branch: 'bundler_versions'
+gem 'geminabox', '1.4.1'
 gem 'puma', '~> 5.0'

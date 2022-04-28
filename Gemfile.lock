@@ -1,17 +1,3 @@
-GIT
-  remote: https://github.com/ahorek/geminabox.git
-  revision: a15ce35332add76aead7ec11220114c30d46f477
-  branch: bundler_versions
-  specs:
-    geminabox (1.4.1)
-      builder
-      faraday
-      httpclient (>= 2.2.7)
-      nesty
-      reentrant_flock
-      rss
-      sinatra (>= 1.2.7)
-
 GEM
   remote: https://rubygems.org/
   specs:
@@ -20,6 +6,14 @@ GEM
       faraday-net_http (~> 2.0)
       ruby2_keywords (>= 0.0.4)
     faraday-net_http (2.0.2)
+    geminabox (1.4.1)
+      builder
+      faraday
+      httpclient (>= 2.2.7)
+      nesty
+      reentrant_flock
+      rss
+      sinatra (>= 1.2.7)
     httpclient (2.8.3)
     mustermann (1.1.1)
       ruby2_keywords (~> 0.0.1)
@@ -47,7 +41,7 @@ PLATFORMS
   x86_64-linux-musl
 
 DEPENDENCIES
-  geminabox!
+  geminabox (= 1.4.1)
   puma (~> 5.0)
 
 BUNDLED WITH
