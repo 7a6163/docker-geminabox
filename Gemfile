@@ -1,4 +1,4 @@
 source 'https://rubygems.org'
 
-gem 'geminabox', '1.4.1'
-gem 'puma', '~> 5.0'
+gem 'geminabox', '~> 2.1'
+gem 'puma', '~> 6.4'

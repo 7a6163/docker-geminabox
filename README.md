@@ -57,8 +57,6 @@ docker run -d -p 8080:9292 --mount type=bind,src=$PWD,dst=/var/geminabox-data 7a
 ### docker-compose.yml
 Basic Authentication is activated and docker volume mounted to persist gems.
 ```yaml
-version: '3.7'
-
 services:
   geminabox:
     image: 7a6163/geminabox:latest

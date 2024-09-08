@@ -2,23 +2,23 @@ require 'rubygems'
 require 'geminabox'
 
 Geminabox.data = '/var/geminabox-data' # ... or wherever
-Geminabox.rubygems_proxy = ENV['RUBYGEMS_PROXY'] || true
-Geminabox.allow_remote_failure = ENV['ALLOW_REMOTE_FAILURE'] || true
+Geminabox.rubygems_proxy = ENV['RUBYGEMS_PROXY'] == 'true'
+Geminabox.allow_remote_failure = ENV['ALLOW_REMOTE_FAILURE'] == 'true'
 Geminabox.rubygems_proxy_merge_strategy = ENV['RUBYGEMS_PROXY_MERGE_STRATEGY']&.to_sym || :combine_local_and_remote_gem_versions
 
 # Use Rack::Protection to prevent XSS and CSRF vulnerability if your geminabox server is open public.
-# # Rack::Protection requires a session middleware, choose your favorite one such as Rack::Session::Memcache.
-# # This example uses Rack::Session::Pool for simplicity, but please note that:
-# # 1) Rack::Session::Pool is not available for multiprocess servers such as unicorn
-# # 2) Rack::Session::Pool causes memory leak (it does not expire stored `@pool` hash)
+# Rack::Protection requires a session middleware, choose your favorite one such as Rack::Session::Memcache.
+# This example uses Rack::Session::Pool for simplicity, but please note that:
+# 1) Rack::Session::Pool is not available for multiprocess servers such as unicorn
+# 2) Rack::Session::Pool causes memory leak (it does not expire stored `@pool` hash)
 use Rack::Session::Pool, expire_after: 1000 # sec
 use Rack::Protection
 
 # Basic Authentication
-@@username = ENV['BASIC_USER']
-@@password = ENV['BASIC_PASS']
+USERNAME = ENV['BASIC_USER']
+PASSWORD = ENV['BASIC_PASS']
 
-unless @@username.empty? && @@password.empty?
+unless USERNAME.to_s.empty? && PASSWORD.to_s.empty?
   Geminabox::Server.helpers do
     def protected!
       return if authorized?
@@ -29,7 +29,7 @@ unless @@username.empty? && @@password.empty?
 
     def authorized?
       @auth ||= Rack::Auth::Basic::Request.new(request.env)
-      @auth.provided? && @auth.basic? && @auth.credentials && @auth.credentials == [@@username, @@password]
+      @auth.provided? && @auth.basic? && @auth.credentials && @auth.credentials == [USERNAME, PASSWORD]
     end
   end
 
