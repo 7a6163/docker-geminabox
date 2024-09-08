@@ -18,17 +18,17 @@ USERNAME = ENV['BASIC_USER']
 PASSWORD = ENV['BASIC_PASS']
 
 unless USERNAME.to_s.empty? && PASSWORD.to_s.empty?
-  use Rack::Auth::Basic, "Geminabox" do |username, password|
+  use Rack::Auth::Basic, 'Geminabox' do |username, password|
     [username, password] == [USERNAME, PASSWORD]
   end
 
   Geminabox::Server.helpers do
     def protected!
       @auth ||= Rack::Auth::Basic::Request.new(request.env)
-      unless @auth.provided? && @auth.basic? && @auth.credentials && @auth.credentials == [USERNAME, PASSWORD]
-        response['WWW-Authenticate'] = %(Basic realm="Geminabox")
-        halt 401, "Authentication required.\n"
-      end
+      return if @auth.provided? && @auth.basic? && @auth.credentials && @auth.credentials == [USERNAME, PASSWORD]
+
+      response['WWW-Authenticate'] = %(Basic realm="Geminabox")
+      halt 401, "Authentication required.\n"
     end
   end
 
