@@ -1,18 +1,17 @@
 require 'rubygems'
 require 'geminabox'
 
-Geminabox.data = '/var/geminabox-data' # ... or wherever
+Geminabox.data = '/var/geminabox-data'
 Geminabox.rubygems_proxy = ENV['RUBYGEMS_PROXY'] == 'true'
 Geminabox.allow_remote_failure = ENV['ALLOW_REMOTE_FAILURE'] == 'true'
 Geminabox.rubygems_proxy_merge_strategy = ENV['RUBYGEMS_PROXY_MERGE_STRATEGY']&.to_sym || :combine_local_and_remote_gem_versions
 
-# Use Rack::Protection to prevent XSS and CSRF vulnerability if your geminabox server is open public.
-# Rack::Protection requires a session middleware, choose your favorite one such as Rack::Session::Memcache.
-# This example uses Rack::Session::Pool for simplicity, but please note that:
-# 1) Rack::Session::Pool is not available for multiprocess servers such as unicorn
-# 2) Rack::Session::Pool causes memory leak (it does not expire stored `@pool` hash)
+use Rack::Config do |env|
+  env['HTTPS'] = 'on' if env['HTTP_X_FORWARDED_PROTO'] == 'https'
+end
+
 use Rack::Session::Pool, expire_after: 1000 # sec
-use Rack::Protection
+use Rack::Protection, except: [:http_origin]
 
 # Basic Authentication
 USERNAME = ENV['BASIC_USER']
