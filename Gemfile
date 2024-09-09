@@ -1,4 +1,4 @@
 source 'https://rubygems.org'
 
+gem 'agoo', '~> 2.15'
 gem 'geminabox', '~> 2.1'
-gem 'puma', '~> 6.4'

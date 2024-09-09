@@ -17,4 +17,4 @@ ENV BASIC_PASS=""
 ENV RACK_ENV="production"
 
 EXPOSE 9292
-ENTRYPOINT ["/sbin/tini", "--", "bundle", "exec", "puma"]
+ENTRYPOINT ["/sbin/tini", "--", "bundle", "exec", "agoo"]
